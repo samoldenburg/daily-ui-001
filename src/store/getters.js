@@ -1,5 +1,3 @@
-/**
- * Getters return a small portion of the state, and can be bound in the computed () method with MapGetters from vuex
- */
-
 // Menu
+export const getMessages = state => state.chat.messages
+export const getServerReplying = state => state.chat.serverReplying

@@ -1,32 +1,63 @@
 <template>
     <div id="chat">
-        <div class="message left">
-            <div class="inner">
-                Hello world!
+        <div id="chat-output" v-if="messages">
+
+            <div v-for="message in messages">
+                <div class="message" :data-from="message.user">
+                    <div class="inner" v-html="message.message"></div>
+                </div>
             </div>
-        </div>
-        <div class="message right">
-            <div class="inner">
-                Hello world!
-            </div>
-        </div>
-        <div class="message right">
-            <div class="inner">
-                Hello world!
+            <div v-if="serverReplying">
+                <div class="replying">
+                    <span>{{ dots }}</span>
+                </div>
             </div>
         </div>
         <div id="text-entry">
-            <input type="text" placeholder="Type a message..." />
+            <input id="text-input" type="text" placeholder="Type a message..." @keyup.enter="userSendMessage" />
         </div>
     </div>
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
+import * as types from '../store/mutation-types'
+
 export default {
     name: 'chat',
     data () {
         return {
+            messages: null,
+            serverReplying: true,
+            dots: '...'
         }
+    },
+    created () {
+        setInterval(() => {
+            if (this.dots.length == 3) {
+                this.dots = '.'
+            }
+            else {
+                this.dots = this.dots + '.'
+            }
+        }, 333)
+
+        this.$store.dispatch('serverSendMessage', "Hey there! I'm here to help guide you through the registration process.");
+        setTimeout(() => {
+            this.$store.dispatch('serverSendMessage', "First - Could you tell me your name?");
+            this.$store.commit(types.SERVER_NOT_REPLYING)
+        }, 2000)
+    },
+    computed: {
+        ...mapGetters({
+            messages: 'getMessages',
+            serverReplying: 'getServerReplying'
+        })
+    },
+    methods: {
+        ...mapActions([
+            'userSendMessage'
+        ])
     }
 }
 </script>
@@ -61,7 +92,7 @@ export default {
     position relative
     margin-bottom 1rem
 
-    &.left
+    &[data-from="server"]
         text-align left
         padding-left 51px
 
@@ -87,6 +118,7 @@ export default {
                 position absolute
                 top 50%
                 left 0
+                z-index -1
                 transform translate(45px, -50%)
                 width 0
                 height 0
@@ -94,7 +126,7 @@ export default {
                 border-width 10px 10px 10px 0px
                 border-color transparent $main-5 transparent transparent
 
-    &.right
+    &[data-from="user"]
         text-align right
         padding-right 51px
 
@@ -120,6 +152,7 @@ export default {
                 position absolute
                 top 50%
                 right 0
+                z-index -1
                 transform translate(-45px, -50%)
                 width 0
                 height 0
@@ -128,12 +161,25 @@ export default {
                 border-color transparent transparent transparent $main-5
 
     .inner
-        border-radius 15px
+        border-radius 1rem
         display inline-block
         padding 0.4rem 1rem
         box-shadow 3px 3px 10px rgba(0,0,0,0.1)
+        max-width 45%
 
+.replying
+    background rgba(255,255,255,0.2)
+    display inline-block
+    padding 0.4rem 1rem
+    border-radius 1rem
+    line-height 0
+    height 15px
+    margin-left 53px
+    width 23px
 
+    span
+        font-size 32px
+        color rgba(0,0,0,0.5)
 
 #text-entry
     position absolute
@@ -158,4 +204,15 @@ export default {
             background rgba(255,255,255,0.5)
             border-top 1px solid $main-4
             box-shadow 0px 3px 15px $main-4
+
+#chat-output
+    position absolute
+    height 100%
+    width 100%
+    top 0
+    left 0
+    padding 2rem 2rem 5rem 2rem
+    box-sizing border-box
+    overflow-x hidden
+    overflow-y auto
 </style>

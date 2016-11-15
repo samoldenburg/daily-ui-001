@@ -1,18 +1,11 @@
 # daily-ui-001
 
-> A Vue.js project
+##Daily UI Challenge no. 1
 
-## Build Setup
+Uses the vue-cli webpack template with vuex added for state management.
 
-``` bash
-# install dependencies
-npm install
+**Challenge:** Create a signup form
 
-# serve with hot reload at localhost:8080
-npm run dev
+**Result:** Emulates a chatbot experience to guide a user through a signup process in an interactive, dynamic way.
 
-# build for production with minification
-npm run build
-```
-
-For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+###View at http://angry-operation.surge.sh/

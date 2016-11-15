@@ -3,8 +3,6 @@
  */
 
 // Menu
-export const OPEN_MENU = 'menu/OPEN'
-export const CLOSE_MENU = 'menu/CLOSE'
-export const TOGGLE_MENU = 'menu/TOGGLE'
-export const SET_PRIMARY_MENU = 'menu/SET_PRIMARY'
-export const COLOR_MENU_WHITE = 'menu/COLOR_WHITE'
+export const SEND_CHAT_MESSAGE = 'chat/SEND_MESSAGE'
+export const SERVER_REPLYING = 'chat/SERVER_REPLYING'
+export const SERVER_NOT_REPLYING = 'chat/SERVER_NOT_REPLYING'

@@ -10,7 +10,32 @@
 
 import Vue from 'vue'
 import * as types from './mutation-types'
+import $ from 'jquery'
 
-export const openChat = ({ commit }) => {
-    // commit(types.OPEN_MENU)
+export const userSendMessage = ({ commit }) => {
+    let $ti = $('#text-input');
+    let message = $ti.val()
+    if (!message.length) {
+        return false
+    }
+    $ti.val('')
+    commit(types.SEND_CHAT_MESSAGE, {
+        user: 'user',
+        message: message
+    })
+
+    $('#chat-output').animate({
+        scrollTop: $('#chat-output').innerHeight() + 100 + 'px'
+    }, 150)
+}
+
+export const serverSendMessage = ({ commit }, message) => {
+    commit(types.SEND_CHAT_MESSAGE, {
+        user: 'server',
+        message: message
+    })
+
+    $('#chat-output').animate({
+        scrollTop: $('#chat-output').innerHeight() + 100 + 'px'
+    }, 150)
 }

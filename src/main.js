@@ -10,3 +10,5 @@ new Vue({
     template: '<App/>',
     components: { App }
 })
+
+import './lib/server'
