@@ -1,6 +1,4 @@
-# daily-ui-001
-
-##Daily UI Challenge no. 1
+#Daily UI Challenge no. 1
 
 Uses the vue-cli webpack template with vuex added for state management.
 
